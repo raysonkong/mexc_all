@@ -23,8 +23,6 @@ SLEEP_TIME = 0.2
 # GROUP_SIZE = len(EXCHANGES) * 1000
 
 # URL = 'https://www.mexc.com/open/api/v2/market/ticker'
-
-
 # ## end of Config file
 
 
@@ -51,14 +49,14 @@ current_time = time.strftime("%H:%M:%S", t)
 response = requests.get(URL)
 #print(response.json())
 
-coins = response.json()
+coins = response.json()['data']
 
 #print(coins)
 
 result = []
 for coin in coins:
-    if coin['symbol'][-4:].lower() == 'usdt':
-        result.append(EXCHANGES[0] + ":" + coin['symbol'])
+    if coin['symbol'][-len(WANTED_CURRENCIES[0]):] == WANTED_CURRENCIES[0]:
+        result.append(EXCHANGES[0] + ":" + coin['symbol'].replace('_', ''))
 
 #print(result)
 
